@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block title %}Статистика — CS2 Stats{% endblock %}
+
+{% block content %}
+<h2 class="mb-4 text-light">
+    <i class="bi bi-graph-up text-warning"></i> Общая статистика
+</h2>
+
+{% if total_matches > 0 %}
+<div class="row g-4 mb-4">
+    <!-- Всего матчей -->
+    <div class="col-md-3">
+        <div class="card stat-card text-center p-3">
+            <div class="card-body">
+                <h6 class="text-muted text-uppercase small">Всего матчей</h6>
+                <h2 class="text-light display-4">{{ total_matches }}</h2>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Победы -->
+    <div class="col-md-3">
+        <div class="card stat-card text-center p-3">
+            <div class="card-body">
+                <h6 class="text-muted text-uppercase small">Победы</h6>
+                <h2 class="text-success display-4">{{ wins }}</h2>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Поражения -->
+    <div class="col-md-3">
+        <div class="card stat-card text-center p-3">
+            <div class="card-body">
+                <h6 class="text-muted text-uppercase small">Поражения</h6>
+                <h2 class="text-danger display-4">{{ losses }}</h2>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Средний K/D -->
+    <div class="col-md-3">
+        <div class="card stat-card text-center p-3">
+            <div class="card-body">
+                <h6 class="text-muted text-uppercase small">Средний K/D</h6>
+                <h2 class="text-warning display-4">{{ avg_kd }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Прогресс-бар побед/поражений -->
+<div class="card match-card p-4 mb-4">
+    <h5 class="text-light mb-3">Винрейт</h5>
+    <div class="progress" style="height: 30px;">
+        <div class="progress-bar bg-success" role="progressbar" style="width: {{ winrate }}%">
+            {{ winrate }}%
+        </div>
+        <div class="progress-bar bg-danger" role="progressbar" style="width: {{ lossrate }}%">
+            {{ lossrate }}%
+        </div>
+    </div>
+    <div class="d-flex justify-content-between mt-2">
+        <span class="text-success">{{ wins }} побед</span>
+        <span class="text-danger">{{ losses }} поражений</span>
+    </div>
+</div>
+
+<!-- Детальная статистика -->
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="card match-card p-4">
+            <h5 class="text-light mb-3"><i class="bi bi-crosshair text-warning"></i> Убийства и смерти</h5>
+            <div class="d-flex justify-content-around">
+                <div class="text-center">
+                    <h3 class="text-success display-4">{{ total_kills }}</h3>
+                    <p class="text-muted">Всего убийств</p>
+                </div>
+                <div class="text-center">
+                    <h3 class="text-danger display-4">{{ total_deaths }}</h3>
+                    <p class="text-muted">Всего смертей</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card match-card p-4">
+            <h5 class="text-light mb-3"><i class="bi bi-trophy text-warning"></i> Достижения</h5>
+            <div class="row text-center">
+                <div class="col-6">
+                    <h3 class="text-warning display-4">{{ (matches | map(attribute='mvps') | sum) if matches else 0 }}</h3>
+                    <p class="text-muted">Всего MVP</p>
+                </div>
+                <div class="col-6">
+                    <h3 class="text-info display-4">{{ (matches | map(attribute='assists') | sum) if matches else 0 }}</h3>
+                    <p class="text-muted">Всего ассистов</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% else %}
+<!-- Если матчей нет -->
+<div class="text-center my-5">
+    <i class="bi bi-graph-down-arrow display-1 text-muted"></i>
+    <p class="text-muted fs-4 mt-3">Нет данных для отображения статистики</p>
+    <p class="text-muted">Добавьте свой первый матч, чтобы увидеть статистику</p>
+    <a href="/add" class="btn btn-warning mt-3">
+        <i class="bi bi-plus-lg"></i> Добавить матч
+    </a>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block title %}Добавить матч — CS2 Stats{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <h2 class="mb-4 text-light"><i class="bi bi-plus-circle text-warning"></i> Добавить новый матч</h2>
+        <div class="card match-card p-4 shadow-sm text-light">
+            <form method="POST">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Карта</label>
+                        <select class="form-select bg-dark text-light border-secondary" name="map" required>
+                            <option value="de_mirage">Mirage</option>
+                            <option value="de_inferno">Inferno</option>
+                            <option value="de_dust2">Dust 2</option>
+                            <option value="de_nuke">Nuke</option>
+                            <option value="de_ancient">Ancient</option>
+                            <option value="de_anubis">Anubis</option>
+                            <option value="de_vertigo">Vertigo</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Режим</label>
+                        <select class="form-select bg-dark text-light border-secondary" name="mode" required>
+                            <option value="Premier">Premier</option>
+                            <option value="Competitive">Competitive</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Счет</label>
+                        <input type="text" class="form-control bg-dark text-light border-secondary" name="score" placeholder="13:9" pattern="\d+:\d+" title="Введите счет в формате ЧИСЛО:ЧИСЛО (например, 13:9)" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Результат</label>
+                        <select class="form-select bg-dark text-light border-secondary" name="result" required>
+                            <option value="win">Победа</option>
+                            <option value="loss">Поражение</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Убийства (K)</label>
+                        <input type="number" class="form-control bg-dark text-light border-secondary" name="kills" min="0" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Смерти (D)</label>
+                        <input type="number" class="form-control bg-dark text-light border-secondary" name="deaths" min="0" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Помощь (A)</label>
+                        <input type="number" class="form-control bg-dark text-light border-secondary" name="assists" min="0" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Количество MVP</label>
+                        <input type="number" class="form-control bg-dark text-light border-secondary" name="mvps" min="0" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Дата</label>
+                        <input type="date" class="form-control bg-dark text-light border-secondary" name="date" value="{{ today }}" required>
+                    </div>
+                    <div class="col-12 mt-4">
+                        <button type="submit" class="btn btn-warning w-100 fw-bold">Сохранить матч</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

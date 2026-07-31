@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block title %}Мои матчи — CS2 Stats{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="text-light"><i class="bi bi-controller text-warning"></i> Последние матчи</h1>
+    <div>
+        <a href="/add" class="btn btn-warning me-2"><i class="bi bi-plus-lg"></i> Добавить матч</a>
+        <span class="badge bg-secondary fs-6">Всего: {{ matches|length }}</span>
+    </div>
+</div>
+
+<div class="row">
+    {% for match in matches %}
+    <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card match-card h-100 shadow-sm border-0 
+                    {% if match.result == 'win' %}border-start border-4 border-success{% else %}border-start border-4 border-danger{% endif %}">
+            <div class="card-body d-flex flex-column justify-content-between">
+                <div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="card-title mb-0 text-light">
+                            <i class="bi bi-geo-alt-fill text-warning"></i> {{ match.map }}
+                        </h5>
+                        <span class="badge {% if match.result == 'win' %}bg-success{% else %}bg-danger{% endif %}">
+                            {% if match.result == 'win' %}ПОБЕДА{% else %}ПОРАЖЕНИЕ{% endif %}
+                        </span>
+                    </div>
+
+                    <p class="text-muted small mb-2">
+                        <!-- Форматирование даты в красивый вид -->
+                        <i class="bi bi-calendar"></i> {{ match.date.strftime('%d.%m.%Y') }} • 
+                        <i class="bi bi-trophy"></i> {{ match.mode }}
+                    </p>
+
+                    <div class="text-center my-3">
+                        <h2 class="text-light fw-bold">{{ match.score }}</h2>
+                    </div>
+
+                    <div class="row text-center g-2">
+                        <div class="col-4">
+                            <div class="stat-box">
+                                <div class="stat-value text-success">{{ match.kills }}</div>
+                                <div class="stat-label">Убийств</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stat-box">
+                                <div class="stat-value text-danger">{{ match.deaths }}</div>
+                                <div class="stat-label">Смертей</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stat-box">
+                                <div class="stat-value text-warning">{{ match.kd }}</div>
+                                <div class="stat-label">K/D</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top border-secondary">
+                    <span class="text-muted small"><i class="bi bi-hand-thumbs-up"></i> Ассисты: {{ match.assists }}</span>
+                    <span class="text-muted small"><i class="bi bi-star-fill text-warning"></i> MVP: {{ match.mvps }}</span>
+                    
+                    <form action="/delete/{{ match.id }}" method="POST" class="d-inline" onsubmit="return confirm('Удалить этот матч?');">
+                        <button type="submit" class="btn btn-link text-danger p-0 m-0" title="Удалить матч">
+                            <i class="bi bi-trash3"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <!-- Блок, если матчей нет -->
+    <div class="col-12 text-center my-5">
+        <i class="bi bi-joystick display-1 text-muted"></i>
+        <p class="text-muted fs-4 mt-3">Вы еще не добавили ни одного матча.</p>
+        <a href="/add" class="btn btn-outline-warning mt-3">
+            <i class="bi bi-plus-lg"></i> Добавить первый матч
+        </a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
