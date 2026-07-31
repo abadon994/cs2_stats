@@ -25,10 +25,10 @@
 ## 🚀 Локальный запуск
 
 Чтобы запустить проект локально на своем компьютере, выполните следующие шаги:
-
-- git clone https://github.com/ВАШ_НИК/cs2-stats.git
-- cd cs2-stats
-- python -m venv venv
-- venv\Scripts\activate
-- pip install -r requirements.txt
-- python app.py
+```bash
+git clone https://github.com/ВАШ_НИК/cs2-stats.git
+cd cs2-stats
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+python app.py
